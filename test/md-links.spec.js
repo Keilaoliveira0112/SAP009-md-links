@@ -1,29 +1,34 @@
-import { extrairInformacoes } from "../src/md-links";
+import { callback, extrairInformacoes, mdLinks } from "../src/md-links";
+import { readFile } from 'node:fs';
 
+jest.mock('node:fs')
 
-/* describe('exibir informações', () => {
+describe('extrairInformacoes', () => {
+    it('dever extrair informações de link de uma string', () => {
+        const href = "https://pt.wikipedia.org/wiki/Markdown";
+        const text = "Markdown"
+        const string = `[Markdown](https://pt.wikipedia.org/wiki/Markdown)`;
+        const file = "texto.md"
+        const infos = extrairInformacoes(string, file);
 
-    it('deveria extrair informações', () => {
-        const string = 'Markdow'
-        const arquivo = 'texto.md'
-        extrairInformacoes(string, arquivo);
-        
-        expect(extrairInformacoes).toHaveBeenCalledTimes(1);
-        expect(extrairInformacoes).toHaveBeenCalledWith(string, arquivo);
+        expect(infos).toEqual({ href, text, file});
+       
     });
-    console.log('FIX ME!');
-  });
+});
 
- */
-describe('exibir informações', () => {
-    test('is a function', () => {
-        expect(typeof extrairInformacoes).toBe('function');
-    });
-    it('deveria retornar um objeto', () => {
-        const string = "Markdow"
-        const arquivo = "texto.md"
+describe('função md-links', () => {
+    it('dever resolver e retornar um array de objeto', () => {
+        let cb;
+        readFile.mockImplementation((path, option, callback) =>{
+            cb = callback;
 
-        expect(extrairInformacoes(string, arquivo)).toEqual({});
-        expect(extrairInformacoes(string, arquivo)).toEqual({});
+        });
+        const encode = 'utf-8';
+        const caminhoDoArquivo = 'texto.md';
+        mdLinks(caminhoDoArquivo);
+
+        expect(readFile).toHaveBeenCalledTimes(1);
+        expect(readFile).toHaveBeenCalledWith(caminhoDoArquivo,encode,cb);
+
     });
 });
