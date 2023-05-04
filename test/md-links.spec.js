@@ -1,4 +1,4 @@
-import { callback, extrairInformacoes, mdLinks } from "../src/md-links";
+import { extrairInformacoes, mdLinks } from "../src/md-links";
 import { readFile } from 'node:fs';
 
 jest.mock('node:fs')
@@ -18,17 +18,12 @@ describe('extrairInformacoes', () => {
 
 describe('função md-links', () => {
     it('dever resolver e retornar um array de objeto', () => {
-        let cb;
-        readFile.mockImplementation((path, option, callback) =>{
-            cb = callback;
-
-        });
         const encode = 'utf-8';
         const caminhoDoArquivo = 'texto.md';
         mdLinks(caminhoDoArquivo);
 
         expect(readFile).toHaveBeenCalledTimes(1);
-        expect(readFile).toHaveBeenCalledWith(caminhoDoArquivo,encode,cb);
+        expect(readFile).toHaveBeenCalledWith(caminhoDoArquivo,encode,expect.any(Function));
 
     });
 });

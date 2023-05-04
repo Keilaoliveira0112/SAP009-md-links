@@ -46,6 +46,7 @@
   },
   "dependencies": {
     "chalk": "^5.2.0",
-    "commander": "^10.0.1"
+    "commander": "^10.0.1",
+    "node-fetch": "^3.3.1"
   }
 }
