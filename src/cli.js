@@ -2,7 +2,6 @@
 
 import { mdLinks } from './md-links.js';
 import chalk from 'chalk';
-import { argv } from 'node:process';
 import fetch from 'node-fetch';
 
 const caminhoDoArquivo = process.argv[2];
@@ -12,7 +11,36 @@ const options = {
     stats: process.argv.includes('--stats')
 };
 
-if (options.validate) {
+if (options.validate && options.stats) {
+    mdLinks(caminhoDoArquivo, { validate: true })
+        .then((informacoes) => {
+            const links = informacoes.map((item) => item.href);
+            const linksQuebrados = [];
+            Promise.all(informacoes.map((item) =>
+                fetch(item.href)
+                    .then((res) => {
+                        if (res.status !== 200) {
+                            linksQuebrados.push(item.href);
+                        }
+                    })
+                    .catch(() => {
+                        linksQuebrados.push(item.href);
+                    })
+            ))
+                .then(() => {
+                    console.log(`Total: ${informacoes.length}`);
+                    console.log(`Unique: ${links.length}`);
+                    console.log(`Broken: ${linksQuebrados.length}`);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+
+} else if (options.validate) {
     mdLinks(caminhoDoArquivo, { validate: true })
         .then((informacoes) => {
             informacoes.map((item) => {
@@ -29,22 +57,14 @@ if (options.validate) {
         .catch((err) => {
             console.log(err);
         });
+
 } else if (options.stats) {
     mdLinks(caminhoDoArquivo, { stats: true })
         .then((informacoes) => {
             const links = informacoes.map((item) => item.href);
             console.log(`Total: ${informacoes.length}`);
             console.log(`Unique: ${links.length}`);
-        }).catch((err) => {
-            console.log(err);
-        });
-} else if (options.validate && options.stats) {
-    mdLinks(caminhoDoArquivo, { validate: true, stats: true })
-        .then((informacoes) => {
-            const links = informacoes.map((item) => item.href);
-            console.log(`Total: ${informacoes.length}`);
-            console.log(`Unique: ${links.length}`);
-        }).catch((err) => {
-            console.log(err);
-        });
+        })
+} else {
+    mdLinks(caminhoDoArquivo)
 }
