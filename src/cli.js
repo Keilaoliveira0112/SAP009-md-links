@@ -12,8 +12,8 @@ const options = {
 };
 
 if (options.validate && options.stats) {
-    mdLinks(caminhoDoArquivo, { validate: true })
-        .then((informacoes) => {
+    mdLinks(caminhoDoArquivo,  options).then((dados) => console.log(dados));
+      /*   .then((informacoes) => {
             const links = informacoes.map((item) => item.href);
             const linksQuebrados = [];
             Promise.all(informacoes.map((item) =>
@@ -26,8 +26,8 @@ if (options.validate && options.stats) {
                     .catch(() => {
                         linksQuebrados.push(item.href);
                     })
-            ))
-                .then(() => {
+            )) */
+               /*  .then(() => {
                     console.log(`Total: ${informacoes.length}`);
                     console.log(`Unique: ${links.length}`);
                     console.log(`Broken: ${linksQuebrados.length}`);
@@ -40,7 +40,7 @@ if (options.validate && options.stats) {
             console.log(err);
         });
 
-} else if (options.validate) {
+ */} else if (options.validate) {
     mdLinks(caminhoDoArquivo, { validate: true })
         .then((informacoes) => {
             informacoes.map((item) => {
@@ -66,5 +66,12 @@ if (options.validate && options.stats) {
             console.log(`Unique: ${links.length}`);
         })
 } else {
-    mdLinks(caminhoDoArquivo)
+    mdLinks(caminhoDoArquivo, options)
+    .then((informacoes) => {
+        informacoes.map((item) => {
+            console.log(`${chalk.blue(item.file)} ${chalk.cyan(item.href)}${chalk.green(item.text)} `);
+        });
+    }).catch((err) => {
+        console.log(err);
+    });
 }
