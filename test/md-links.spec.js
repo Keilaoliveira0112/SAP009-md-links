@@ -12,9 +12,12 @@ describe('extrairInformacoes', () => {
         const infos = extrairInformacoes(string, file);
 
         expect(infos).toEqual({ href, text, file});
-       
     });
+    it('deve retornar um erro quando não receber a string como paramêtro', () => {
+      expect(() => extrairInformacoes()).toThrow()
+    })
 });
+
 
 describe('função md-links', () => {
     it('dever resolver e retornar um array de objeto', () => {
@@ -22,8 +25,10 @@ describe('função md-links', () => {
         const caminhoDoArquivo = 'texto.md';
         mdLinks(caminhoDoArquivo);
 
-        expect(readFile).toHaveBeenCalledTimes(1);
-        expect(readFile).toHaveBeenCalledWith(caminhoDoArquivo,encode,expect.any(Function));
-
-    });
+      expect(readFile).toHaveBeenCalledTimes(1);
+      expect(readFile).toHaveBeenCalledWith(caminhoDoArquivo,encode,expect.any(Function));
+    })
+    it('deve retornar um erro quando não receber paramêtro', () => {
+      expect(() => mdLinks()).toThrow()
+    })
 });
