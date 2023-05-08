@@ -22,31 +22,31 @@ export const mdLinks = (caminhoDoArquivo, options) => {
             if (err) throw reject(err);
             const conteudo = data.match(regex);
             const informacoes = conteudo.map((item) => extrairInformacoes(item, caminhoDoArquivo));
-            /* const links = informacoes.map((item) => item.href); */
-           if (options.validate) {
-            const dados = Promise.all(informacoes.map((item) =>
-                fetch(item.href)
-                    .then((res) => {
-                        item.status = res.status;
-                        if (res.status !== 200) {
-                            item.ok = 'fail';
-                        } else {
-                            item.ok = res.statusText;
-                        }
-                    })
-                    .catch((err) => {
-                        item.ok = 'fail';
-                        item.status = err;
-                    })
-            ))
-            .then (() => {
-                resolve(dados);
-            })     
-                       
+           
+            if (options.validate) {
+                Promise.all(informacoes.map((item) =>
+                    fetch(item.href)
+                        .then((res) => {
+                            item.status = res.status;
+                            if (res.status !== 200) {
+                                item.message = 'FAIL'
+                            } else {
+                                item.message = res.statusText;
+                            }
+                            return item;
+                        })
+                        .catch((err) => {
+                            item.status = err;
+                            item.message = 'Esse link não existe';
+                            return item;
+                        })
+                ))
+                    .then(resolve)
+            } else {
+                resolve(informacoes);
             }
-           resolve(informacoes);        
+
         });
-        
-    })
+    });
 };
 
