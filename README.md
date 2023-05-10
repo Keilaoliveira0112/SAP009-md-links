@@ -28,7 +28,7 @@
 * [2. Instalação e comandos](#2-instalaçao-e-comandos)
 * [3. Ferramentas utilizadas](#3-ferramntas-utilizadas)
 * [4. Arquivos do Projeto](#4-arquivos-projeto)
-* [5. Fluxograma](#5-fluxograma)
+* [5. Backlog](#5-backlog)
 
 ***
 
@@ -63,7 +63,7 @@ Neste projeto focado em Back-End, foi criado uma ferramenta de linha de comando 
 
 - [x] Node.js
 - [x] JavaScript
-- [x]Jest
+- [x] Jest
 - [x] GitHub
 - [x] Miró (Fluxograma)
 
@@ -85,13 +85,14 @@ configuração básica para ESLint, se quiser colocar regras adicionais, você d
 * `test/md-links.spec.js` deve conter os testes unitários para a função
   `mdLinks()`. A sua implementação deve rodar estes testes.
 
-## 5. Fluxograma
- <estilo div = "display:flex">   
-  <div alinhar = "centro">
+## 5. Backlog
+ 
+ <div style="display:flex">
+  <div align="center">
 
-    <img alt="fluxograma" width="650"src="file:///C:/Users/keila/Downloads/MD-links%20(1).jpg"/><br>
+    <img alt="fluxograma" width="650"src="https://user-images.githubusercontent.com/122574525/237382834-6220c9c6-e093-46ea-82b4-2c5778205862.jpg"/><br>
 
 
-   Fluxograma para desenvolvimento do projeto.
+   Fluxograma com todas as etapas para o desenvolvimento do projeto.
   </div>
  </div>

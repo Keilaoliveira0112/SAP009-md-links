@@ -7,10 +7,10 @@ import {
     mdLinks,
     validate,
     calculateStats
-} from '../src/md-links';
+} from '../src/md-links'
 
-import { readFile, lstatSync } from 'node:fs';
-import { extname } from 'node:path';
+import { readFile, lstatSync } from 'node:fs'
+import { extname } from 'node:path' 
 
 jest.mock('node:fs')
 jest.mock('node:path')
@@ -20,9 +20,9 @@ afterEach(() => {
     //jest.clearAllMocks()
 })
 
-//Passou ✔️
+//Passou 
 describe('Verificação do Caminho', () => {
-    //1. isDirectory ✔️
+    //1. isDirectory 
     it('deve verificar se o caminho passado foi um diretório', () => {
         const mockDirectory = { isDirectory: () => true }
         lstatSync.mockReturnValueOnce(mockDirectory)
@@ -33,7 +33,7 @@ describe('Verificação do Caminho', () => {
         expect(lstatSync).toHaveBeenCalledWith(path);
         expect(directory).toEqual(true)
     });
-    //2. isFile ✔️
+    //2. isFile 
     it('deve verificar se o caminho passado foi um arquivo', () => {
         const mockFile = { isFile: () => true }
         lstatSync.mockReturnValueOnce(mockFile)
@@ -46,7 +46,7 @@ describe('Verificação do Caminho', () => {
     });
 });
 
-//3. readFile() ❌
+//3. readFile() 
 const path = 'text.md';
 it('deve chamar a readfile com os parâmetros corretos', () => {
     readFile.mockResolvedValue()
@@ -84,7 +84,7 @@ const info = [
         message: 'FAIL'
     }
 ];
-//4. checkOptions ❌
+//4. checkOptions 
 /* describe('Função checkOptions', () => {
     it.only('Deve retornar total, unique, broken', () => {
         const options = {
@@ -102,7 +102,7 @@ const info = [
         expect(check).toEqual(result)
     })
 })  */
-//5. Função calculeStats -> retornar total,unique,broken ✔️
+//5. Função calculeStats -> retornar total,unique,broken 
 it('deve retornar os valores totais, únicos e quebrados dos links', () => {
 
     const resultado = {
@@ -117,12 +117,12 @@ it('deve retornar os valores totais, únicos e quebrados dos links', () => {
 })
 
 describe('função md-links', () => {
-//6. Função Md-links: erro quando não tiver parâmetro ✔️
+//6. Função Md-links: erro quando não tiver parâmetro 
     it('deve retornar um erro quando não tiver parâmetro', () => {
         expect(() => mdLinks()).toThrow();
     });
 
-//7. Função Md-links: erro quando a extensão não for .md ❌
+//7. Função Md-links: erro quando a extensão não for .md 
 
 });
 
