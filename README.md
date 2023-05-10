@@ -92,6 +92,6 @@ configuração básica para ESLint, se quiser colocar regras adicionais, você d
     <img alt="fluxograma" width="650"src="https://user-images.githubusercontent.com/122574525/237382834-6220c9c6-e093-46ea-82b4-2c5778205862.jpg"/><br>
 
 
-   Fluxograma para as etapas do desenvolvimento do projetoestudos.
+   Fluxograma para as etapas do desenvolvimento do projeto.
   </div>
  </div>
