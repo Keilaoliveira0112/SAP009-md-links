@@ -86,8 +86,9 @@ configuração básica para ESLint, se quiser colocar regras adicionais, você d
   `mdLinks()`. A sua implementação deve rodar estes testes.
 
 ## 5. Backlog
- <estilo div = "display:flex">   
-  <div alinhar = "centro">
+ 
+ <div style="display:flex">
+  <div align="center">
 
     <img alt="fluxograma" width="650"src="https://user-images.githubusercontent.com/122574525/237382834-6220c9c6-e093-46ea-82b4-2c5778205862.jpg"/><br>
 
