@@ -2,21 +2,24 @@
 
 import { mdLinks } from './md-links.js';
 import chalk from 'chalk';
-import fetch from 'node-fetch';
+import { argv } from 'node:process';
 
-const caminhoDoArquivo = process.argv[2];
+const caminhoDoArquivo = argv[2];
+console.log(caminhoDoArquivo)
+
+
 
 const options = {
-    validate: process.argv.includes('--validate'),
-    stats: process.argv.includes('--stats')
+  validate: argv.includes('--validate'),
+
+  stats: argv.includes('--stats'),
+
 };
 
 if (options.validate && options.stats) {
     mdLinks(caminhoDoArquivo, options)
         .then((result) => {
-            const links = result.map((item) => item.href);
-            const broken = result.filter((item) => item.status !== 200);
-            console.log(`Total: ${result.length} \nUnique: ${links.length} \nBroken: ${broken.length}`);
+            console.log(`Total: ${result.total} \nUnique: ${result.unique} \nBroken: ${result.broken}`);
         })
         .catch((err) => {
             console.log(err);
@@ -24,7 +27,9 @@ if (options.validate && options.stats) {
 } else if (options.validate) {
     mdLinks(caminhoDoArquivo, options)
         .then((result) => {
+            console.log(result) 
             result.map((item) => {
+
                 if (item.status !== 200) {
                     console.log(`${chalk.blue(item.file)} ${chalk.cyanBright(item.href)} ${chalk.red(item.message)} ${chalk.redBright(item.status)} ${chalk.yellowBright(item.text)}`)
                 } else {
@@ -36,16 +41,15 @@ if (options.validate && options.stats) {
         })
 } else if (options.stats) {
     mdLinks(caminhoDoArquivo, options)
-        .then((informacoes) => {
-            const links = informacoes.map((item) => item.link);
-            console.log(`Total: ${informacoes.length} \nUnique: ${links.length}`);
+        .then((result) => {
+            console.log(`Total: ${result.total} \nUnique: ${result.unique}`);
         }).catch((err) => {
             console.log(err);
         });
 } else {
     mdLinks(caminhoDoArquivo, options)
-        .then((informacoes) => {
-            informacoes.map((item) => {
+        .then((result) => {
+            result.map((item) => {
                 console.log(`${chalk.blue(item.file)} ${chalk.cyanBright(item.href)} ${chalk.yellowBright(item.text)}`)
             });
         }).catch((err) => {
